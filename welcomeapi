@@ -1,1 +1,40 @@
 import requests
+
+import sys
+
+import getopt
+
+
+#Send slack message using Slack API
+
+def send_slack_message(message):
+    payload = '{"text":"%s"}' % message
+    response = requests.post('https://hooks.slack.com/services/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', data=payload)
+                    
+        
+def main (argv) :
+    
+    message = "Hello, welcome to MDVFS!"
+    
+    
+    try:  opts, args = getopt.getopt(argv, "hm:", ["message="])
+    
+    except getopt.GetoptError:
+        print('SlackMessage.py -m <message>')
+        sys.exit(2)
+        
+    if len(opts) == 0:
+        message = "Hello, welcome to MDVFS!"
+    for opt, arg in opts:
+        if opt == '-h':
+            print('SlackMessage.py -m <message>')
+            sys.exit()
+        elif opt in ("m", "--message"):
+            message = arg
+            
+    send_slack_message(message)
+    
+    
+if __name__== "__main__":
+    main(sys.argv[1:])
+    
